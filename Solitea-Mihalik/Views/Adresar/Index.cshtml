@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Adresář";
+}
+
+<h2 class="text-center">Adresář</h2>
+
+<div>
+    @Html.ActionLink("Nová osoba", "VytvorNovouOsobu", null, new { @class = "btn btn-default m15" })
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-18 col-md-12">
+            @(Html.Kendo().Grid<Solitea_Mihalik.Models.OsobaViewModel>()
+                .Name("grid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.ID);
+                    columns.Bound(p => p.Jmeno);
+                    columns.Bound(p => p.Prijmeni);
+                    columns.Bound(p => p.IC);
+                    columns.Bound(p => p.DIC);
+                    columns.Template(@<text></text>).ClientTemplate("<a href='" + Url.Action("DetailOsoby", "Adresar", new { osobaID = "#=ID#" }) + "'>Zobraz Detail</a>");
+                    columns.Template(@<text></text>).ClientTemplate("<a href='" + Url.Action("VytvorNovouAdresu", "Adresar", new { osobaID = "#=ID#" }) + "'>Nová adresa</a>");
+                })
+                .ClientDetailTemplateId("adresaGrid")
+                .HtmlAttributes(new { style = "height:550px;" })
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("NactiOsoby", "Adresar"))
+                )
+                .Events(events => events.DataBound("dataBound"))
+            )
+        </div>
+    </div>
+</div>
+
+<script id="adresaGrid" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<Solitea_Mihalik.Models.AdresaViewModel>()
+        .Name("grid_#=ID#")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ID);
+            columns.Bound(o => o.Ulice);
+            columns.Bound(o => o.Mesto);
+            columns.Bound(o => o.PSC);
+        })
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("HierarchyBinding_Adresy", "Adresar", new { osobaID = "#=ID#" }))
+        )
+        .ToClientTemplate()
+    )
+</script>
+<script>
+    function dataBound() {
+        this.expandRow(this.tbody.find("tr.k-master-row").first());
+    }
+</script>

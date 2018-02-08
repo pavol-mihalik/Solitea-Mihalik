@@ -1,0 +1,21 @@
+﻿@model Solitea_Mihalik.Models.AdresaViewModel
+
+<h2 class="text-center">Nová Adresa</h2>
+
+@using (Html.BeginForm("UlozAdresu", "Adresar", FormMethod.Post))
+{
+    <div>
+        @Html.HiddenFor(m => m.OsobaID)
+        @Html.Label("Ulice", new { @class = "m10" })
+        @Html.TextBoxFor(m => m.Ulice, new { @class = "m10" })
+        @Html.Label("Město", new { @class = "m10" })
+        @Html.TextBoxFor(m => m.Mesto, new { @class = "m10" })
+        @Html.Label("PSČ", new { @class = "m10" })
+        @Html.TextBoxFor(m => m.PSC, new { @class = "m10" })
+    </div>
+
+    <div>
+        @Html.ActionLink("Zpět", "Index", null, new { @class = "btn btn-default m10" })
+        <input class="btn btn-success" type="submit" value="Uložit" />
+    </div>
+}

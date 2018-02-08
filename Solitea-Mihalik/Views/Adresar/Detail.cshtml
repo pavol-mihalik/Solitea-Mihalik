@@ -1,0 +1,38 @@
+﻿@model Solitea_Mihalik.Models.OsobaViewModel
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+@using (Html.BeginForm("UlozDetail", "Adresar", FormMethod.Post))
+{
+    <div>
+        @Html.HiddenFor(m => m.ID)
+        @Html.Label("Jméno", new { @class = "m10" })
+        @Html.TextBoxFor(m => m.Jmeno, new { @class = "m10" })
+        @Html.Label("Příjmení", new { @class = "m10" })
+        @Html.TextBoxFor(m => m.Prijmeni, new { @class = "m10" })
+        @Html.Label("IČ", new { @class = "m10" })
+        @Html.TextBoxFor(m => m.IC, new { @class = "m10" })
+        @Html.Label("DIČ", new { @class = "m10" })
+        @Html.TextBoxFor(m => m.DIC, new { @class = "m10" })
+        @Html.ActionLink("Smazat osobu", "SmazOsobu", new { osobaId = Model.ID }, new { @class = "btn btn-danger m10" })
+    </div>
+
+    for (int i = 0; i < Model.Adresy.Count; i++)
+    {
+        <div>
+            @Html.HiddenFor(m => m.Adresy[i].ID)
+            @Html.Label("Ulice", new { @class = "m10" })
+            @Html.TextBoxFor(m => m.Adresy[i].Ulice, new { @class = "m10" })
+            @Html.Label("Město", new { @class = "m10" })
+            @Html.TextBoxFor(m => m.Adresy[i].Mesto, new { @class = "m10" })
+            @Html.Label("PSČ", new { @class = "m10" })
+            @Html.TextBoxFor(m => m.Adresy[i].PSC, new { @class = "m10" })
+            @Html.ActionLink("Smazat adresu", "SmazAdresu", new { adresaId = Model.Adresy[i].ID }, new { @class = "btn btn-danger m10" })
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Zpět", "Index", null, new { @class = "btn btn-default m10" })
+        <input class="btn btn-success" type="submit" value="Uložit" />
+    </div>
+}
