@@ -24,7 +24,6 @@
                     columns.Template(@<text></text>).ClientTemplate("<a href='" + Url.Action("VytvorNovouAdresu", "Adresar", new { osobaID = "#=ID#" }) + "'>Nová adresa</a>");
                 })
                 .ClientDetailTemplateId("adresaGrid")
-                .HtmlAttributes(new { style = "height:550px;" })
                 .DataSource(dataSource => dataSource
                 .Ajax()
                 .Read(read => read.Action("NactiOsoby", "Adresar"))
